@@ -14,9 +14,7 @@ file_handler.setLevel(logging.DEBUG)
 # the formatter determines what our logs will look like
 
 fmt_shell = "%(message)s"
-fmt_file = (
-    "%(levelname)s %(asctime)s [%(filename)s:%(funcName)s:%(lineno)d] %(message)s"
-)
+fmt_file = "%(levelname)s %(asctime)s [%(filename)s:%(funcName)s:%(lineno)d] %(message)s"
 
 shell_formatter = logging.Formatter(fmt_shell)
 file_formatter = logging.Formatter(fmt_file)
