@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  bourseview:
+    build: .
+    image: image_name
+    ports:
+      - 10000:8080
+
+    restart: "unless-stopped"
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # volumes:
+    #   - type: bind
+    #     source: ./log
+    #     target: /app/log

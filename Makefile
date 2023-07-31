@@ -13,6 +13,11 @@ create_environment: ## create conda environment
 	$(CONDA_ACTIVATE)
 	conda create -n $(PROJECT_NAME) python=3.10
 
+generate_requirements: ## generate requirements.txt using pipreqs
+	$(CONDA_ACTIVATE) $(PROJECT_NAME)
+	pip install pipreqs
+	pipreqs . --force
+
 install_requirements: ## install requirements.txt using pip
 	$(CONDA_ACTIVATE) $(PROJECT_NAME)
 	pip install -r requirements.txt
@@ -35,3 +40,16 @@ install_pre_commit: ## install pre-commit hook on git
 pre-commit: ## run pre-commit
 	$(CONDA_ACTIVATE) $(PROJECT_NAME)
 	pre-commit run --all-files
+
+local_docker_push: local_docker_build ## push to mofid repo
+	docker compose -f docker-local.yaml push
+
+local_docker_build: ## build (recreate) local docker image
+	docker compose -f docker-local.yaml build
+
+local_docker_up: ## run locally created docker image
+	docker compose -f docker-local.yaml up
+
+remote_docker_pull_run: ## remote docker command for server
+	docker-compose pull && docker-compose up -d
+
