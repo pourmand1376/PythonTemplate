@@ -27,6 +27,11 @@ jupyter: ## run jupyter
 	$(CONDA_ACTIVATE) $(PROJECT_NAME)
 	jupyter lab --port=8080
 
+install_pre_commit: ## install pre-commit hook on git
+	$(CONDA_ACTIVATE) $(PROJECT_NAME)
+	pre-commit install
+
 .PHONY: pre-commit
 pre-commit: ## run pre-commit
+	$(CONDA_ACTIVATE) $(PROJECT_NAME)
 	pre-commit run --all-files
