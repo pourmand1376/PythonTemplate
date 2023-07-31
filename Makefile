@@ -11,7 +11,7 @@ help:
 
 create_environment: ## create conda environment
 	$(CONDA_ACTIVATE)
-	conda create -n 
+	conda create -n $(PROJECT_NAME) python=3.10
 
 install_requirements: ## install requirements.txt using pip
 	$(CONDA_ACTIVATE) $(PROJECT_NAME)
