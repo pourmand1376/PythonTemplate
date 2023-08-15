@@ -13,6 +13,10 @@ create_environment: ## create conda environment
 	$(CONDA_ACTIVATE)
 	conda create -n $(PROJECT_NAME) python=3.10
 
+remove_environment: ## remove conda environment completely
+	# only use this if environment is corrupted
+	conda remove --name $(PROJECT_NAME) --all
+
 generate_requirements: ## generate requirements.txt using pipreqs
 	$(CONDA_ACTIVATE) $(PROJECT_NAME)
 	pip install pipreqs
