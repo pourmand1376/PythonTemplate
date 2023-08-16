@@ -56,3 +56,6 @@ local_docker_up: ## run locally created docker image
 
 remote_docker_pull_run: ## remote docker command for server
 	docker-compose pull && docker-compose up -d
+
+see_logs: ## watch logs in realtime
+	tail -f debug.log
