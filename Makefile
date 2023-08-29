@@ -62,6 +62,7 @@ see_logs: ## watch logs in realtime
 
 run_docker_python: ## run a new docker python on server
 	docker run --name container_name -it -v $(pwd):/code python:3.10 /bin/bash
+	docker run --name container_name -p 10000:10000 -it -v $(pwd):/code python:3.10 /bin/bash
 	# then Ctrl+P, Ctrl+Q to exit
 
 attach_docker: ## attach a created docker containers
