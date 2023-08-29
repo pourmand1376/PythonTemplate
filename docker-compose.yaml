@@ -1,8 +1,9 @@
 version: "3.7"
 
 services:
-  bourseview:
-    image: image_name
+  app:
+    build: .
+    image: image_name:${VERSION}
     ports:
       - 10000:8080
 

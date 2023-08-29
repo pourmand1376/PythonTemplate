@@ -45,14 +45,14 @@ pre-commit: ## run pre-commit
 	$(CONDA_ACTIVATE) $(PROJECT_NAME)
 	pre-commit run --all-files
 
-local_docker_push: local_docker_build ## push to mofid repo
-	docker compose -f docker-local.yaml push
+local_docker_push: local_docker_build ## push to repo
+	docker compose push
 
 local_docker_build: ## build (recreate) local docker image
-	docker compose -f docker-local.yaml build
+	docker compose up --build
 
 local_docker_up: ## run locally created docker image
-	docker compose -f docker-local.yaml up
+	docker compose up
 
 remote_docker_pull_run: ## remote docker command for server
 	docker-compose pull && docker-compose up -d
