@@ -70,6 +70,8 @@ attach_docker: ## attach a created docker containers
 
 docker_container_jupyter:
 	# https://dev.to/juanbelieni/how-to-run-jupyterlab-on-docker-4n80
+	mkdir Jupyter
+	chmod 777 Jupyter
 	docker run -p 8888:8888 \
            -e JUPYTER_ENABLE_LAB=yes \
            -e JUPYTER_TOKEN=docker \
