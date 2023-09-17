@@ -77,4 +77,4 @@ docker_container_jupyter:
            -e JUPYTER_TOKEN=docker \
 	   -v $(pwd)/Jupyter:/home/jovyan/persistent"
            --name jupyter-mine \
-           -d jupyter/minimal-notebook:latest
+           -d jupyter/minimal-notebook:python-3.8
