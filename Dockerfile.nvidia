@@ -40,6 +40,8 @@ RUN pyenv install ${PYTHON_VERSION} && \
     pyenv rehash && \
     pip install --no-cache-dir -U pip setuptools wheel
 
+#RUN pip config --user set global.index-url  https://${REGISTRY_USER}:${REGISTRY_PASS}@repo.mofid.dev/artifactory/api/pypi/pypi-remote/simple
+
 COPY --chown=1000 ./requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /tmp/requirements.txt
 

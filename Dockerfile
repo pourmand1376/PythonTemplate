@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY requirements.txt .
 
+# RUN pip config --user set global.index-url  https://${REGISTRY_USER}:${REGISTRY_PASS}@repo.mofid.dev/artifactory/api/pypi/pypi-remote/simple
+
 RUN pip install -r requirements.txt
 
 COPY . .
