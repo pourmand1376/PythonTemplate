@@ -8,7 +8,8 @@ services:
       args:
         - REGISTRY_USER=${REGISTRY_USER}
         - REGISTRY_PASS=${REGISTRY_PASS}
-
+    env_file:
+      - .env
     container_name: whisper-jax
     user: root
     environment:
