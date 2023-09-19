@@ -31,6 +31,11 @@ install_dev_requirements: ## install requirements_dev.txt using pip
 	$(CONDA_ACTIVATE) $(PROJECT_NAME)
 	pip install -r requirements_dev.txt
 
+
+# this is not needed if you use poetry
+generate_requirements_lock: ## generate fixed requirement dependencies in case any library is acting problematic
+	pip freeze > requirements.lock
+
 .PHONY: jupyter
 jupyter: ## run jupyter
 	$(CONDA_ACTIVATE) $(PROJECT_NAME)
