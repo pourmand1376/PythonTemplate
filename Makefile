@@ -67,3 +67,14 @@ run_docker_python: ## run a new docker python on server
 
 attach_docker: ## attach a created docker containers
 	docker attach container_name
+
+docker_container_jupyter:
+	# https://dev.to/juanbelieni/how-to-run-jupyterlab-on-docker-4n80
+	mkdir Jupyter
+	chmod 777 Jupyter
+	docker run -p 8888:8888 \
+           -e JUPYTER_ENABLE_LAB=yes \
+           -e JUPYTER_TOKEN=docker \
+	   -v $(pwd)/Jupyter:/home/jovyan/persistent"
+           --name jupyter-mine \
+           -d jupyter/minimal-notebook:python-3.8
