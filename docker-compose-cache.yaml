@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     container_name: whisper-jax
-    user: root
+    #user: root
     environment:
       - GIT_PYTHON_REFRESH=quiet
       - HUGGINGFACE_HUB_CACHE=/home/user/temp/cache/HUGGINGFACE_HUB_CACHE
