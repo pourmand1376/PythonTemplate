@@ -80,6 +80,6 @@ docker_container_jupyter:
 	docker run -p 8888:8888 \
            -e JUPYTER_ENABLE_LAB=yes \
            -e JUPYTER_TOKEN=docker \
-	   -v $(pwd)/Jupyter:/home/jovyan/persistent"
+	   -v $(pwd)/Jupyter:/home/jovyan/persistent \
            --name jupyter-mine \
            -d jupyter/minimal-notebook:python-3.8
