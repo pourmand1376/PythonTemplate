@@ -34,7 +34,7 @@ install_dev_requirements: ## install requirements_dev.txt using pip
 
 # this is not needed if you use poetry
 generate_requirements_lock: ## generate fixed requirement dependencies in case any library is acting problematic
-	pip freeze > requirements.lock
+	pip list --format=freeze > requirements.lock
 
 .PHONY: jupyter
 jupyter: ## run jupyter
