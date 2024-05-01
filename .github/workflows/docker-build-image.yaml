@@ -2,7 +2,7 @@ name: Build and Push to ACR
 on:
   push:
     branches:
-      - 'main'
+      - 'master' # this is to disable github actions!
       - 'staging'
       - 'dev'
 jobs:
