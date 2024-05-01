@@ -2,11 +2,11 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY ./requirements.txt /tmp/requirements.txt
 
 # RUN pip config --user set global.index-url  https://${REGISTRY_USER}:${REGISTRY_PASS}@repo.mofid.dev/artifactory/api/pypi/pypi-remote/simple
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /tmp/requirements.txt
 
 COPY . .
 
