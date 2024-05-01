@@ -21,7 +21,7 @@ jobs:
       - name: Docker Login
         uses: azure/docker-login@v1
         with:
-          login-server: ${{ secrets.ACR_ADDRESS }}
+          login-server: onecliq.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ secrets.ACR_ADDRESS }}/docker-image-name-${{ steps.extract_branch.outputs.branch }}:latest
+          tags: sample.azurecr.io/docker-image-name-${{ steps.extract_branch.outputs.branch }}:latest
           file: Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
