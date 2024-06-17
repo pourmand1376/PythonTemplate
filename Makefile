@@ -87,4 +87,4 @@ docker_container_jupyter:
 # https://github.com/jazzband/pip-tools
 # https://calmcode.io/course/pip-tools/compile
 pip_compile: ## compile dependencies
-	pip-compile requirements.in -o requirements.txt 
+	pip-compile requirements.in -o requirements.txt
