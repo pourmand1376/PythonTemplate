@@ -83,3 +83,8 @@ docker_container_jupyter:
 	   -v $(pwd)/Jupyter:/home/jovyan/persistent \
            --name jupyter-mine \
            -d jupyter/minimal-notebook:python-3.8
+
+# https://github.com/jazzband/pip-tools
+# https://calmcode.io/course/pip-tools/compile
+pip_compile: ## compile dependencies
+	pip-compile requirements.in -o requirements.txt 
