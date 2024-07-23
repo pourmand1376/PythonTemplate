@@ -1,0 +1,65 @@
+name: Build and Push to ACR
+on:
+  push:
+    branches:
+      - 'main'
+      - 'staging'
+      - 'dev'
+jobs:
+  build:
+    name: 'Build and Push to ACR'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - dockerfile: dockerfiles/Dockerfile.fastapi
+            image: fastapi
+            service_name: api
+          - dockerfile: dockerfiles/Dockerfile.queue
+            image: queue
+            service_name: queue
+          - dockerfile: dockerfiles/Dockerfile.streamlit
+            image: streamlit
+            service_name: ui
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Docker Login
+        uses: azure/docker-login@v1
+        with:
+          login-server: onecliq.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
+      - name: Build and Push to ACR
+        uses: docker/build-push-action@v5
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: onecliq.azurecr.io/consumer_insight_engine-${{ matrix.image }}-${{ steps.extract_branch.outputs.branch }}:latest
+          file: ${{ matrix.dockerfile }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ steps.extract_branch.outputs.branch == 'main' && secrets.HOST_MAIN || secrets.HOST_STG }}
+          username: azureuser
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: sh /home/azureuser/services/engine_${{ steps.extract_branch.outputs.branch }}/update_${{ matrix.service_name }}.sh

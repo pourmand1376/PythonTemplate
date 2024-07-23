@@ -10,15 +10,15 @@ x-common: &common
 
 services:
   api:
-    image: azurecr.io/myimage-ui-main:latest
+    image: azurecr.io/myimage-ui-dev:latest
     <<: *common
     ports:
       - 7373:80
   ui:
-    image: azurecr.io/myimage-streamlit-main:latest
+    image: azurecr.io/myimage-streamlit-dev:latest
     <<: *common
     ports:
       - 7374:8501
   queue:
-    image: azurecr.io/myimage-queue-main:latest
+    image: azurecr.io/myimage-queue-dev:latest
     <<: *common

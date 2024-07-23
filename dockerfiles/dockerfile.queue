@@ -1,0 +1,22 @@
+FROM python:3.10-slim
+
+RUN apt-get update && apt-get install -y \
+    build-essential unzip \
+    curl \
+    software-properties-common \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip
+RUN ./aws/install
+
+COPY ./requirements.txt /tmp/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /tmp/requirements.txt
+
+WORKDIR /app
+
+COPY . .
+
+CMD ["python","app_queue.py"]
