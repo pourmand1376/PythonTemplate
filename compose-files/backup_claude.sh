@@ -18,14 +18,14 @@ cd "$DOCKER_DIR" || exit
 mkdir -p "$BACKUP_DIR"
 
 # Stop Docker containers
-docker compose down db
+docker compose down
 
 # Create new backup
 BACKUP_FILE="volumes-$(date +"%Y%m%d_%H%M%S").tgz"
 sudo tar -cvf "$BACKUP_DIR/$BACKUP_FILE" volumes
 
 # Start Docker containers
-docker compose up db -d
+docker compose up -d
 
 # Remove old backups
 cd "$BACKUP_DIR" || exit
