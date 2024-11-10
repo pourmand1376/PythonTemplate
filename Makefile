@@ -3,32 +3,39 @@ SHELL = /bin/bash
 
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
 
-PROJECT_NAME := template_project
+PROJECT_NAME := reddit_scraper
+
+# I added this since this should be usabe in docker without conda too.
+CONDA_CMD = if command -v conda >/dev/null 2>&1; then $(CONDA_ACTIVATE) $(PROJECT_NAME); else echo "conda is not installed"; fi
 
 .PHONY: help
 help:
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m  %-30s\033[0m %s\n", $$1, $$2}'
 
 create_environment: ## create conda environment
-	$(CONDA_ACTIVATE)
-	conda create -n $(PROJECT_NAME) python=3.10
+	$(CONDA_ACTIVATE)	
+	conda create -n $(PROJECT_NAME) python=$$(cat .python-version)
+
+install_requirements: ## install requirements.txt using pip
+	$(CONDA_CMD)
+	pip install -r requirements.txt
 
 remove_environment: ## remove conda environment completely
 	# only use this if environment is corrupted
 	conda remove --name $(PROJECT_NAME) --all
 
 generate_requirements: ## generate requirements.txt using pipreqs
-	$(CONDA_ACTIVATE) $(PROJECT_NAME)
+	$(CONDA_CMD)
 	pip install pipreqs
 	pipreqs . --force
 
 install_requirements: ## install requirements.txt using pip
-	$(CONDA_ACTIVATE) $(PROJECT_NAME)
+	$(CONDA_CMD)
 	pip install -r requirements.txt
 
 .PHONY: install_dev_requirements
 install_dev_requirements: ## install requirements_dev.txt using pip
-	$(CONDA_ACTIVATE) $(PROJECT_NAME)
+	$(CONDA_CMD)
 	pip install -r requirements_dev.txt
 
 
@@ -38,16 +45,16 @@ generate_requirements_lock: ## generate fixed requirement dependencies in case a
 
 .PHONY: jupyter
 jupyter: ## run jupyter
-	$(CONDA_ACTIVATE) $(PROJECT_NAME)
+	$(CONDA_CMD)
 	jupyter lab --port=8080
 
 install_pre_commit: ## install pre-commit hook on git
-	$(CONDA_ACTIVATE) $(PROJECT_NAME)
+	$(CONDA_CMD)
 	pre-commit install
 
 .PHONY: pre-commit
 pre-commit: ## run pre-commit
-	$(CONDA_ACTIVATE) $(PROJECT_NAME)
+	$(CONDA_CMD)
 	pre-commit run --all-files
 
 local_docker_push: local_docker_build ## push to repo
@@ -87,4 +94,5 @@ docker_container_jupyter:
 # https://github.com/jazzband/pip-tools
 # https://calmcode.io/course/pip-tools/compile
 pip_compile: ## compile dependencies
+	$(CONDA_CMD)
 	pip-compile requirements.in -o requirements.txt
