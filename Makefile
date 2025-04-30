@@ -96,3 +96,8 @@ docker_container_jupyter:
 pip_compile: ## compile dependencies
 	$(CONDA_CMD)
 	pip-compile requirements.in -o requirements.txt
+
+# https://github.com/the-full-stack/conda-piptools
+pip_install: ## install dependencies
+	$(CONDA_CMD)
+	pip-sync requirements.txt
