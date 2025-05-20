@@ -95,7 +95,7 @@ docker_container_jupyter:
 # https://calmcode.io/course/pip-tools/compile
 pip_compile: ## compile dependencies
 	$(CONDA_CMD)
-	pip-compile requirements.in -o requirements.txt
+	pip-compile requirements.in -o requirements.txt --verbose
 
 # https://github.com/the-full-stack/conda-piptools
 pip_install: ## install dependencies
