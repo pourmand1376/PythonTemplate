@@ -13,7 +13,7 @@ help:
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m  %-30s\033[0m %s\n", $$1, $$2}'
 
 create_environment: ## create conda environment
-	$(CONDA_ACTIVATE)	
+	$(CONDA_ACTIVATE)
 	conda create -n $(PROJECT_NAME) python=$$(cat .python-version)
 
 install_requirements: ## install requirements.txt using pip
