@@ -1,7 +1,7 @@
 .ONESHELL:
 SHELL = /bin/bash
 
-CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
+CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate 
 
 PROJECT_NAME := reddit_scraper
 
