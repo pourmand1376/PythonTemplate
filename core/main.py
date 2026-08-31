@@ -1,2 +1,1 @@
-"""Starting point of my program
-"""
+"""Starting point of my program"""
